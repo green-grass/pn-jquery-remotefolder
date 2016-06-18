@@ -1,6 +1,6 @@
 {
   "name": "pn-jquery-remotefolder",
-  "version": "1.0.0-rc1-3",
+  "version": "1.0.0-rc1-4",
   "description": "PhantomNet jQuery component remotefolder",
   "main": "./dist/pn-remotefolder.js",
   "authors": [

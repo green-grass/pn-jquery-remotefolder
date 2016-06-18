@@ -1099,7 +1099,7 @@
                     });
                 }
                 nameEditor.focus();
-                if (!Modernizr.touch && document.queryCommandEnabled("selectAll")) {
+                if (Modernizr && !Modernizr.touch && document.queryCommandEnabled("selectAll")) {
                     document.execCommand("selectAll", false, null);
                 }
                 $(target).triggerHandler("beginEdit", item);
