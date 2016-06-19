@@ -15,7 +15,7 @@
 
     PN.namespace("PN.Components");
 
-    var DEFAULT_EVENT_DOMAIN = ".remote-folder",
+    var DEFAULT_EVENT_DOMAIN = ".remotefolder",
 
         FLOAT_LEFT_CSS_CLASS = "pull-left",
         FLOAT_RIGHT_CSS_CLASS = "pull-right",
@@ -41,7 +41,7 @@
         ERROR_PROGRESS_BAR_CSS_CLASS = "progress-bar-danger",
         DISABLED_PROGRESS_BAR_CSS_CLASS = "progress-bar-warning",
 
-        COMPONENT_CSS_CLASS = "remote-folder",
+        COMPONENT_CSS_CLASS = "remotefolder",
         ITEM_CSS_CLASS = "item",
         FILE_NAME_CSS_CLASS = "file-name",
         FILE_SIZE_CSS_CLASS = "file-size",

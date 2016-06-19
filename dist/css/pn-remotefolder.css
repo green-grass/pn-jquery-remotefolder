@@ -1,22 +1,22 @@
 
-.remote-folder ul {
+.remotefolder ul {
     padding: 0;
     margin-top: 20px;
 }
 
-.remote-folder .panel-heading .pull-right {
+.remotefolder .panel-heading .pull-right {
     margin-left: 10px;
 }
 
-.remote-folder .panel-heading .pull-right.edit {
+.remotefolder .panel-heading .pull-right.edit {
     margin-left: 20px;
 }
 
-.remote-folder .progress {
+.remotefolder .progress {
     margin-bottom: 0;
     height: 22px;
 }
 
-.remote-folder .progress.pull-right {
+.remotefolder .progress.pull-right {
     width: 24px;
 }
