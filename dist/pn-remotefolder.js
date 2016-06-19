@@ -4,6 +4,7 @@
  * Licensed under the MIT license
  * 
  * Dependencies:
+ * - Modernizr (optional)
  * - jQuery
  * - Phantom Net Namespace and Inheritance
  */
@@ -228,7 +229,7 @@
             if (isMultiPartSupport() && !disableMultipart) {
                 var fileId = item.data("fileId") || Date.now().valueOf() + "-" + fileName,
                     nextPartIndex = item.data("nextPartIndex") || 0;
-                item.data("fileId", fileId)
+                item.data("fileId", fileId);
                 sendPart(fileId, nextPartIndex);
             } else {
                 var xhr = new XMLHttpRequest(),
@@ -274,21 +275,16 @@
             this._super(item);
 
             function isMultiPartSupport() {
-                return (
-                       (typeof (File) !== "undefined")
-                       &&
-                       (typeof (Blob) !== "undefined")
-                       &&
-                       (typeof (FileList) !== "undefined")
-                       &&
-                       (!!Blob.prototype.webkitSlice || !!Blob.prototype.mozSlice || !!Blob.prototype.slice || false)
-                       );
+                return typeof File !== "undefined" &&
+                       typeof Blob !== "undefined" &&
+                       typeof FileList !== "undefined" &&
+                       (!!Blob.prototype.webkitSlice || !!Blob.prototype.mozSlice || !!Blob.prototype.slice || false);
             }
 
             function sendPart(fileId, index) {
                 var partSize = 1048576, // 1 MB
                     xhr = new XMLHttpRequest(),
-                    sliceFunc = (file.slice ? "slice" : (file.mozSlice ? "mozSlice" : (file.webkitSlice ? "webkitSlice" : "slice"))),
+                    sliceFunc = file.slice ? "slice" : file.mozSlice ? "mozSlice" : file.webkitSlice ? "webkitSlice" : "slice",
                     part = file[sliceFunc](index * partSize, (index + 1) * partSize);
 
                 item.data("uploader", xhr);
@@ -456,7 +452,7 @@
 
                     function isXhrProgressSupported() {
                         var xhr = new XMLHttpRequest();
-                        return !!(xhr && ("upload" in xhr) && ("onprogress" in xhr.upload));
+                        return !!(xhr && "upload" in xhr && "onprogress" in xhr.upload);
                     }
                 }
 
@@ -581,7 +577,7 @@
                     }
 
                     var speed = item.data("speed") || "",
-                        size = speed + ((isNaN(loaded) || isNaN(total)) ? "" : PN.Components.RemoteFolder.formatFileSize(loaded) + " / " + PN.Components.RemoteFolder.formatFileSize(total)),
+                        size = speed + (isNaN(loaded) || isNaN(total) ? "" : PN.Components.RemoteFolder.formatFileSize(loaded) + " / " + PN.Components.RemoteFolder.formatFileSize(total)),
                         sizeLabel = $("." + FILE_SIZE_CSS_CLASS, item),
                         progressBar = $("." + PROGRESS_BAR_CSS_CLASS, item);
 
@@ -693,7 +689,7 @@
                                 break;
                         }
                     });
-                    for (var i = 0; i < Math.min(itemsToUpload.length, maxUploadCount - uploadingCount) ; i++) {
+                    for (var i = 0; i < Math.min(itemsToUpload.length, maxUploadCount - uploadingCount); i++) {
                         var item = itemsToUpload[i];
                         that.uploadHandler.upload(item, that.options.uploadUrl, !that.options.resume);
                         $("button." + RETRY_BUTTON_CSS_CLASS.split(" ")[0], item).css("visibility", "");
@@ -904,7 +900,7 @@
     }
 
     function getItemState(item) {
-        var panel = $("." + PANEL_CSS_CLASS, item)
+        var panel = $("." + PANEL_CSS_CLASS, item);
         return panel.hasClass(NORMAL_PANEL_CSS_CLASS) ? "Normal" :
             panel.hasClass(SUCCESS_PANEL_CSS_CLASS) ? "Success" :
             panel.hasClass(ERROR_PANEL_CSS_CLASS) ? "Error" :
@@ -1099,7 +1095,7 @@
                     });
                 }
                 nameEditor.focus();
-                if (Modernizr && !Modernizr.touch && document.queryCommandEnabled("selectAll")) {
+                if (!Modernizr.touch && document.queryCommandEnabled("selectAll")) {
                     document.execCommand("selectAll", false, null);
                 }
                 $(target).triggerHandler("beginEdit", item);
