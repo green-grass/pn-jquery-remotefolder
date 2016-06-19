@@ -32,7 +32,7 @@
         ERROR_PANEL_CSS_CLASS = "panel-danger",
         DISABLED_PANEL_CSS_CLASS = "panel-warning",
 
-        IMAGE_CSS_CLASS = "img-responsive img-rounded",
+        IMAGE_CSS_CLASS = "img-responsive",
 
         PROGRESS_CSS_CLASS = "progress",
         PROGRESS_BAR_CSS_CLASS = "progress-bar",
@@ -689,7 +689,7 @@
                                 break;
                         }
                     });
-                    for (var i = 0; i < Math.min(itemsToUpload.length, maxUploadCount - uploadingCount); i++) {
+                    for (var i = 0; i < Math.min(itemsToUpload.length, maxUploadCount - uploadingCount) ; i++) {
                         var item = itemsToUpload[i];
                         that.uploadHandler.upload(item, that.options.uploadUrl, !that.options.resume);
                         $("button." + RETRY_BUTTON_CSS_CLASS.split(" ")[0], item).css("visibility", "");
@@ -874,38 +874,6 @@
                                                                                .append(nameLabel)))
                                          .append(panelBody.append(image)));
         return ret;
-    }
-
-    function switchItemState(item, state) {
-        var panel = $("." + PANEL_CSS_CLASS, item).removeClass(NORMAL_PANEL_CSS_CLASS)
-                                                  .removeClass(SUCCESS_PANEL_CSS_CLASS)
-                                                  .removeClass(ERROR_PANEL_CSS_CLASS)
-                                                  .removeClass(DISABLED_PANEL_CSS_CLASS);
-        switch (state) {
-            case "Normal":
-                panel.addClass(NORMAL_PANEL_CSS_CLASS);
-                break;
-            case "Success":
-                panel.addClass(SUCCESS_PANEL_CSS_CLASS);
-                break;
-            case "Error":
-                panel.addClass(ERROR_PANEL_CSS_CLASS);
-                break;
-            case "Disabled":
-                panel.addClass(DISABLED_PANEL_CSS_CLASS);
-                break;
-            default:
-                break;
-        }
-    }
-
-    function getItemState(item) {
-        var panel = $("." + PANEL_CSS_CLASS, item);
-        return panel.hasClass(NORMAL_PANEL_CSS_CLASS) ? "Normal" :
-            panel.hasClass(SUCCESS_PANEL_CSS_CLASS) ? "Success" :
-            panel.hasClass(ERROR_PANEL_CSS_CLASS) ? "Error" :
-            panel.hasClass(DISABLED_PANEL_CSS_CLASS) ? "Disabled" : null;
-
     }
 
     function populateFileList(target, items) {
@@ -1176,6 +1144,38 @@
                 }
             }
         }
+    }
+
+    function switchItemState(item, state) {
+        var panel = $("." + PANEL_CSS_CLASS, item).removeClass(NORMAL_PANEL_CSS_CLASS)
+                                                  .removeClass(SUCCESS_PANEL_CSS_CLASS)
+                                                  .removeClass(ERROR_PANEL_CSS_CLASS)
+                                                  .removeClass(DISABLED_PANEL_CSS_CLASS);
+        switch (state) {
+            case "Normal":
+                panel.addClass(NORMAL_PANEL_CSS_CLASS);
+                break;
+            case "Success":
+                panel.addClass(SUCCESS_PANEL_CSS_CLASS);
+                break;
+            case "Error":
+                panel.addClass(ERROR_PANEL_CSS_CLASS);
+                break;
+            case "Disabled":
+                panel.addClass(DISABLED_PANEL_CSS_CLASS);
+                break;
+            default:
+                break;
+        }
+    }
+
+    function getItemState(item) {
+        var panel = $("." + PANEL_CSS_CLASS, item);
+        return panel.hasClass(NORMAL_PANEL_CSS_CLASS) ? "Normal" :
+            panel.hasClass(SUCCESS_PANEL_CSS_CLASS) ? "Success" :
+            panel.hasClass(ERROR_PANEL_CSS_CLASS) ? "Error" :
+            panel.hasClass(DISABLED_PANEL_CSS_CLASS) ? "Disabled" : null;
+
     }
 
 })();
