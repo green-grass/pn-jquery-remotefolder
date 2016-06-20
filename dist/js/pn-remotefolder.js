@@ -4,7 +4,7 @@
  * Licensed under the MIT license
  * 
  * Dependencies:
- * - Modernizr (optional)
+ * - Modernizr
  * - jQuery
  * - Phantom Net Namespace and Inheritance
  */
@@ -46,7 +46,7 @@
         FILE_NAME_CSS_CLASS = "file-name",
         FILE_SIZE_CSS_CLASS = "file-size",
         UPLOAD_BUTTON_CSS_CLASS = "btn btn-link btn-lg",
-        UPLOAD_BUTTON_ICON_CSS_CLASS = "glyphicon glyphicon-paperclip",
+        UPLOAD_BUTTON_ICON_CSS_CLASS = "glyphicon glyphicon-cloud-upload",
         UPLOAD_QUEUE_ITEM_BUTTON_CSS_CLASS = "btn btn-link btn-xs pull-right",
         RETRY_BUTTON_CSS_CLASS = "retry " + UPLOAD_QUEUE_ITEM_BUTTON_CSS_CLASS,
         RETRY_BUTTON_ICON_CSS_CLASS = "glyphicon glyphicon-refresh",
@@ -506,6 +506,21 @@
 
                     item.data("status", "added");
 
+                    if (FileReader) {
+                        var reader = new FileReader(),
+                            file = item.data("file");
+
+                        reader.onload = function (event) {
+                            var container = $("<div></div>"),
+                                image = $("<img />");
+                            container.css("height", 0)
+                                     .append(image);
+                            image.attr("src", event.target.result);
+                            progress.prepend(container);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+
                     retryButton.on("click" + DEFAULT_EVENT_DOMAIN, function () {
                         switch (item.data("status")) {
                             case "added":
@@ -943,6 +958,7 @@
                 var content = $("<ul></ul>").addClass(UNSTYLED_LIST_CSS_CLASS);
                 $.each(target.options.predefinedFileNames, function (index, value) {
                     content.append($("<li></li>").append($("<a></a>").html(value)
+                                                                     .attr("href", "javascript:void(0)")
                                                                      .on("click" + DEFAULT_EVENT_DOMAIN, function (e) {
                                                                          if (e.which === 1) {
                                                                              e.preventDefault();
@@ -963,13 +979,11 @@
             }
 
             nameLabel.on("click" + DEFAULT_EVENT_DOMAIN, function (e) {
-                if (!$("[" + CONTENTEDITABLE_ATTRIBUTE + "]", e.currentTarget).is("*")) {
-                    e.preventDefault();
-                    if (target.options.predefinedFileNames.length > 0) {
-                        editButton.popover("show");
-                    }
-                    beginEdit();
+                e.preventDefault();
+                if (!$("[" + CONTENTEDITABLE_ATTRIBUTE + "]", nameLabel).is("*") && target.options.predefinedFileNames.length > 0) {
+                    editButton.popover("show");
                 }
+                beginEdit();
             });
 
             editButton.on("click" + DEFAULT_EVENT_DOMAIN, function (e) {
@@ -1029,6 +1043,10 @@
             }
 
             function beginEdit() {
+                if ($("[" + CONTENTEDITABLE_ATTRIBUTE + "]", nameLabel).is("*")) {
+                    return;
+                }
+
                 var fullName = item.data("fullName"),
                     fullNameWithoutExtension = fullName.substring(0, fullName.lastIndexOf(".")),
                     extension = fullName.substring(fullName.lastIndexOf(".")),
@@ -1063,7 +1081,7 @@
                     });
                 }
                 nameEditor.focus();
-                if (!Modernizr.touch && document.queryCommandEnabled("selectAll")) {
+                if (window.Modernizr && !Modernizr.touch && document.queryCommandEnabled("selectAll")) {
                     document.execCommand("selectAll", false, null);
                 }
                 $(target).triggerHandler("beginEdit", item);

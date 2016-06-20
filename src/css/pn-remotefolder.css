@@ -1,7 +1,16 @@
 ﻿
 .remotefolder ul {
     padding: 0;
-    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.remotefolder ul:last-of-type {
+    margin-bottom: 0;
+}
+
+.remotefolder ul:empty {
+    display: none;
 }
 
 .remotefolder .panel-heading .pull-right {
