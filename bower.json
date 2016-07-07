@@ -1,6 +1,6 @@
 {
   "name": "pn-jquery-remotefolder",
-  "version": "1.0.0-rc1-10",
+  "version": "1.0.0-rc1-11",
   "description": "PhantomNet jQuery component remotefolder",
   "main": "./dist/**/*.*",
   "authors": [
@@ -25,7 +25,7 @@
   "dependencies": {
     "modernizer": ">= 2.8.2",
     "jquery": ">= 2.0.0",
-    "pn-inheritance": ">= 1.0.0",
-    "pn-jquery-utilities": ">= 1.0.0"
+    "pn-inheritance": ">= 0.0.0",
+    "pn-jquery-utilities": ">= 0.0.0"
   }
 }
