@@ -765,7 +765,7 @@
                         onGetError();
                     }
                 })
-                .error(function () { onGetError(); });
+                .fail(function () { onGetError(); });
 
                 function onGetError() {
                 }
@@ -1020,7 +1020,7 @@
                             onFileDeleteError(jqXHR.item);
                         }
                     }, "json")
-                    .error(function (jqXHR) { onFileDeleteError(jqXHR.item); })
+                    .fail(function (jqXHR) { onFileDeleteError(jqXHR.item); })
                 );
                 item.data("deleteJqXHR").item = item;
 
@@ -1131,7 +1131,7 @@
                             onFileRenameError(jqXHR.item, data.fileNotFound);
                         }
                     }, "json")
-                    .error(function (jqXHR) { onFileRenameError(jqXHR.item); })
+                    .fail(function (jqXHR) { onFileRenameError(jqXHR.item); })
                 );
                 item.data("renameJqXHR").item = item;
 
